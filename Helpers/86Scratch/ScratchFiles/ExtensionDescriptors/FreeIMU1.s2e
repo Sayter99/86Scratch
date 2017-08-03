@@ -1,0 +1,63 @@
+﻿{
+    "extensionName": "FreeIMU1 - 9 axis IMU for 86Duino",
+    "extensionPort": 50209,
+    "url": "https://github.com/MrYsLab/PyMata",
+    "blockSpecs": [
+        [
+			" ",
+			"初始化慣性感測器 %m.imu 通訊速度為 %m.speed_mode",
+			"set_encoder_mode",
+            "LSM303",
+            "100KHz"
+		],
+		[
+			"r",
+			"讀取四元數中的 %m.q4",
+			"read_capture_high_low",
+			"q0"
+		],
+		[
+			"r",
+			"讀取 %m.axis 軸加速度值",
+			"read_encoder_count",
+			"X"
+		],
+		[
+			"r",
+			"讀取 %m.value 值",
+			"read_encoder_dir",
+			"yaw"
+		]
+    ],
+    "menus": {
+        "imu": [
+            "LSM303",
+            "RM-G146"
+        ],
+        "speed_mode": [
+            "100KHz",
+            "400KHz"
+        ],
+        "readdata": [
+            "quaternion",
+            "raw data",
+            "yaw pitch roll"
+        ],
+        "q4": [
+            "q0",
+            "q1",
+            "q2",
+            "q3"
+        ],
+        "axis": [
+            "X",
+			"Y",
+			"Z"
+        ],
+        "value": [
+            "yaw",
+            "pitch",
+            "roll"
+        ]
+    }
+}

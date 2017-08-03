@@ -1,0 +1,176 @@
+﻿{
+    "extensionName": "s2a_fm - Scratch to Arduino",
+    "extensionPort": 50209,
+    "url": "https://github.com/MrYsLab/PyMata",
+    "blockSpecs": [
+        [
+            " ",
+            "%m.pin_state Digital Pin %m.pin_number for %m.digital_pin_mode",
+            "digital_pin_mode",
+            "Enable",
+            "0",
+            "Input"
+        ],
+        [
+            " ",
+            "%m.pin_state Analog Pin (A) %m.adcpin_number for Input",
+            "analog_pin_mode",
+            "Enable",
+            "0"
+        ],
+        [
+            " ",
+            "DigitalWrite Set Pin %m.pin_number to %m.high_low",
+            "digital_write",
+            "0",
+            0
+        ],
+        [
+            " ",
+            "AnalogWrite (PWM) Set Pin %m.pwmpin_number to %n",
+            "analog_write",
+            "3",
+            "VAL"
+        ],
+        [
+            " ",
+            "Play Tone on Pin: %m.pin_number HZ: %n ms: %n",
+            "play_tone",
+            "0",
+            1000,
+            500
+        ],
+        [
+            " ",
+            "Turn Tone Off for Pin: %m.pin_number",
+            "tone_off",
+            "0"
+        ],
+        [
+            " ",
+            "Move Servo on Pin %m.pin_number Deg: %n",
+            "set_servo_position",
+            "0",
+            90
+        ],
+        [
+            "r",
+            "Read Digital Pin %m.pin_number",
+            "digital_read",
+            "0"
+        ],
+        [
+            "r",
+            "Read Analog Pin (A) %m.adcpin_number",
+            "analog_read",
+            "PIN"
+        ],
+        [
+            " ",
+            "Debugger %m.off_on",
+            "debugger",
+            "Off"
+        ],
+        [
+			" ",
+			"%m.pin_state : Encoder %m.encoder_number for %m.encoder_mode",
+			"set_encoder_mode",
+            "Enable",
+            "0",
+			"Pulse A/B"
+		],
+        [
+			"r",
+			"Read Encoder %m.encoder_number Count",
+			"read_encoder_count",
+			"0"
+		],
+        [
+			"w",
+			"Enable IMU",
+			"init_imu"
+		],
+        [
+			"r",
+			"Read %m.value value from IMU",
+			"read_imu",
+			"pitch"
+		],
+        [
+			"w",
+			"Move Servo %m.pin_number Deg: %n and %m.delay : %n",
+			"move_one_servo_ex",
+			"0",
+			"90",
+            "Delay(ms)",
+			"1000"
+		],
+        [
+			" ",
+			"Set Servo %m.pin_number Deg: %n and %m.delay : %n (not Move)",
+			"config_servo_ex",
+			"0",
+			"90",
+            "Delay(ms)",
+			"1000"
+		],
+        [
+			" ",
+			"Move All Servos at Same Time",
+			"move_servo_all"
+		]
+    ],
+    "menus": {
+        "pin_state": [
+            "Enable",
+            "Disable"
+        ],
+        "digital_pin_mode": [
+            "Input",
+            "Output",
+            "PWM",
+            "Servo",
+            "Tone",
+            "SONAR"
+        ],
+        "high_low": [
+            "0",
+            "1"
+        ],
+        "off_on": [
+            "Off",
+            "On"
+        ],
+        "encoder_number": [
+            "0",
+            "1",
+            "2",
+            "3",
+        ],
+        "encoder_mode": [
+            "Pulse/DIR",
+			"CW/CCW",
+			"Pulse A/B"
+        ],
+        "value": [
+            "pitch",
+            "roll"
+        ],
+        "delay": [
+            "Delay(ms)",
+            "Velocity(us/s)"
+        ],
+        "pin_number": [
+            "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11",
+            "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23",
+            "24", "25", "26", "27", "28", "29", "30", "31", "32", "33", "34", "35",
+            "36", "37", "38", "39", "40", "41", "42", "43", "44"
+        ],
+        "pwmpin_number": [
+            "3", "5", "6", "9", "10", "11", "13", "29", "30", "31", "32"
+        ],
+        "adcpin_number": [
+            "0", "1", "2", "3", "4", "5", "6", "7"
+        ]
+    }
+}

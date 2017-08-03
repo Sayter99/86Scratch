@@ -1,0 +1,16 @@
+INFO:root:s2a_fm version 1.5    Copyright(C) 2013-14 Alan Yorinks    All Rights Reserved 
+INFO:root:com port = /dev/ttyACM0
+ERROR:root:Could not instantiate PyMata - is your Arduino plugged in?
+Traceback (most recent call last):
+  File "./s2a_fm.py", line 70, in s2a_fm
+    firmata = PyMata(com_port)  # pragma: no cover
+  File "/home/sayter/QtProjects/86Scratch/Helpers/86Scratch/PyMata/pymata.py", line 127, in __init__
+    self.transport = PyMataSerial(port_id, self.command_deque)
+  File "/home/sayter/QtProjects/86Scratch/Helpers/86Scratch/PyMata/pymata_serial.py", line 53, in __init__
+    timeout=int(self.timeout), writeTimeout=0)
+  File "/home/sayter/QtProjects/86Scratch/Helpers/86Scratch/serial/serialutil.py", line 282, in __init__
+    self.open()
+  File "/home/sayter/QtProjects/86Scratch/Helpers/86Scratch/serial/serialposix.py", line 289, in open
+    self.fd = os.open(self.portstr, os.O_RDWR|os.O_NOCTTY|os.O_NONBLOCK)
+OSError: [Errno 2] No such file or directory: '/dev/ttyACM0'
+DEBUG:root:Exiting s2a_fm
