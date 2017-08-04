@@ -104,10 +104,10 @@
    <widget class="QLabel" name="statusLabel">
     <property name="geometry">
      <rect>
-      <x>480</x>
-      <y>10</y>
-      <width>131</width>
-      <height>21</height>
+      <x>340</x>
+      <y>0</y>
+      <width>251</width>
+      <height>41</height>
      </rect>
     </property>
     <property name="font">
@@ -117,6 +117,9 @@
     </property>
     <property name="text">
      <string>Disconnected</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
     </property>
    </widget>
    <widget class="QPushButton" name="uploadFirmwareButton">

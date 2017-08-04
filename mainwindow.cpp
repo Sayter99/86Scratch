@@ -261,6 +261,9 @@ void MainWindow::on_uploadFirmwareButton_clicked()
     }
 
     serialDetector->stop();
+    ui->statusLabel->setStyleSheet("QLabel {color : red;}");
+    ui->statusLabel->setText("Uploading");
+    qApp->processEvents();
 
     QProcess reseter;
     QProcess uploader;
@@ -281,7 +284,11 @@ void MainWindow::on_uploadFirmwareButton_clicked()
         }
     }
     else
+    {
         warnMessage("Error: Missing the uploader");
+        ui->statusLabel->setStyleSheet("QLabel {color : black;}");
+        ui->statusLabel->setText("Disconnected");
+    }
 #elif defined(Q_OS_LINUX) && defined(Q_PROCESSOR_X86_64)
     QFile reset86("./uploader/reset_linux64");
     QFile v86dude("./uploader/v86dude_linux64");
@@ -298,7 +305,11 @@ void MainWindow::on_uploadFirmwareButton_clicked()
         }
     }
     else
+    {
         warnMessage("Error: Missing the uploader");
+        ui->statusLabel->setStyleSheet("QLabel {color : black;}");
+        ui->statusLabel->setText("Disconnected");
+    }
 #elif defined(Q_OS_MACOS)
     QFile reset86("./uploader/reset_macosx.exe");
     QFile v86dude("./uploader/v86dude_mac.exe");
@@ -315,7 +326,11 @@ void MainWindow::on_uploadFirmwareButton_clicked()
         }
     }
     else
+    {
         warnMessage("Error: Missing the uploader");
+        ui->statusLabel->setStyleSheet("QLabel {color : black;}");
+        ui->statusLabel->setText("Disconnected");
+    }
 #elif defined(Q_OS_WIN)
     QFile reset86("./uploader/reset_win.exe");
     QFile v86dude("./uploader/v86dude_win.exe");
@@ -332,12 +347,24 @@ void MainWindow::on_uploadFirmwareButton_clicked()
         }
     }
     else
+    {
         warnMessage("Error: Missing the uploader");
+        ui->statusLabel->setStyleSheet("QLabel {color : black;}");
+        ui->statusLabel->setText("Disconnected");
+    }
 #endif
     if (uploadPort != "")
+    {
         waitForConnected(portName);
+        ui->statusLabel->setStyleSheet("QLabel {color : green;}");
+        ui->statusLabel->setText("Done");
+    }
     else
+    {
         warnMessage("Error: Failed to upload the firmware");
+        ui->statusLabel->setStyleSheet("QLabel {color : black;}");
+        ui->statusLabel->setText("Disconnected");
+    }
     serialDetector->start(1000);
 }
 
@@ -346,7 +373,9 @@ void MainWindow::launchScratch(const QDir& sb2, const QStringList& sb2Files)
     QString sb2File = sb2.absolutePath() + "/" + sb2Files.at(0);
     scratch.setWorkingDirectory(sb2.absolutePath());
 #if defined(Q_OS_LINUX) && defined(Q_PROCESSOR_X86_32)
+    warnMessage("You can start Scratch 2.0 now!");
 #elif defined(Q_OS_LINUX) && defined(Q_PROCESSOR_X86_64)
+    warnMessage("You can start Scratch 2.0 now!");
 #elif defined(Q_OS_MACOS)
     QString scratchPath = "/Applications/Scratch 2.app/Contents/MacOS/Scratch 2";
     QFile scratchApp(scratchPath);
@@ -395,15 +424,14 @@ void MainWindow::on_startButton_clicked()
             warnMessage("Error: Missing a valid serial port");
             return;
         }
-#if defined(Q_OS_LINUX) && defined(Q_PROCESSOR_X86_32)
-        portName = "/dev/" + portName;
-#elif defined(Q_OS_LINUX) && defined(Q_PROCESSOR_X86_64)
-        portName = "/dev/" + portName;
-#elif defined(Q_OS_MACOS)
-        portName = "/dev/" + portName;
-#elif defined(Q_OS_WIN)
+
+#if defined(Q_OS_WIN)
         portName = portName;
+#else
+        portName = "/dev/" + portName;
 #endif
+        ui->statusLabel->setStyleSheet("QLabel {color : blue;}");
+        ui->statusLabel->setText("Connecting");
         // launch python helper
         QString helperDir = QDir::currentPath() + "/Helpers/" + currentProject;
         s2a_fm.setWorkingDirectory(helperDir);
@@ -411,6 +439,8 @@ void MainWindow::on_startButton_clicked()
         if (s2a_fm.error() == QProcess::FailedToStart)
         {
             warnMessage("Error: Cannot launch helper. Please install Python 2.7 or check the environment variables");
+            ui->statusLabel->setStyleSheet("QLabel {color : black;}");
+            ui->statusLabel->setText("Disconnected");
             return;
         }
 
@@ -420,10 +450,13 @@ void MainWindow::on_startButton_clicked()
         if (sb2Files.count() == 0)
         {
             warnMessage("Error: Missing sb2 files");
+            ui->statusLabel->setStyleSheet("QLabel {color : black;}");
+            ui->statusLabel->setText("Disconnected");
             return;
         }
         launchScratch(sb2, sb2Files);
-
+        ui->statusLabel->setStyleSheet("QLabel {color : green;}");
+        ui->statusLabel->setText("Connected");
         isRunning = true;
     }
 }
@@ -435,6 +468,8 @@ void MainWindow::on_stopButton_clicked()
         warnMessage("Error: Please start first");
         return;
     }
+    ui->statusLabel->setStyleSheet("QLabel {color : black;}");
+    ui->statusLabel->setText("Disconnected");
     s2a_fm.close();
     scratch.close();
     isRunning = false;
@@ -456,6 +491,7 @@ void MainWindow::on_revertButton_clicked()
             QFile orgsb2(origin.absolutePath() + "/" + filename);
             orgsb2.copy(current.absolutePath() + "/" + filename);
         }
+        warnMessage("Revert " + currentProject + " successfully");
     }
     else
     {
