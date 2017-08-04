@@ -457,6 +457,9 @@ void MainWindow::on_startButton_clicked()
         launchScratch(sb2, sb2Files);
         ui->statusLabel->setStyleSheet("QLabel {color : green;}");
         ui->statusLabel->setText("Connected");
+        ui->deleteButton->setEnabled(false);
+        ui->revertButton->setEnabled(false);
+        ui->uploadFirmwareButton->setEnabled(false);
         isRunning = true;
     }
 }
@@ -468,6 +471,10 @@ void MainWindow::on_stopButton_clicked()
         warnMessage("Error: Please start first");
         return;
     }
+    if (currentProject != "86Scratch")
+        ui->deleteButton->setEnabled(true);
+    ui->uploadFirmwareButton->setEnabled(true);
+    ui->revertButton->setEnabled(true);
     ui->statusLabel->setStyleSheet("QLabel {color : black;}");
     ui->statusLabel->setText("Disconnected");
     s2a_fm.close();
