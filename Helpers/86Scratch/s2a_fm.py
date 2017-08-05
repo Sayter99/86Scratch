@@ -23,9 +23,7 @@ License along with this library; if not, write to the Free Software
 Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
 """
-import os
 import sys
-import logging
 from PyMata.pymata import PyMata
 import scratch_http_server
 from scratch_command_handlers import ScratchCommandHandlers
@@ -47,13 +45,6 @@ def s2a_fm():
     # number of pins that are analog
     number_of_analog_pins_discovered = 0
 
-    # make sure we have a log directory and if not, create it.
-    if not os.path.exists('log'):
-        os.makedirs('log')
-
-    # turn on logging
-    logging.basicConfig(filename='./log/s2a_fm_debugging.log', filemode='w', level=logging.DEBUG)
-    logging.info('s2a_fm version 1.5    Copyright(C) 2013-14 Alan Yorinks    All Rights Reserved ')
     print 's2a_fm version 1.5   Copyright(C) 2013-14 Alan Yorinks    All Rights Reserved '
 
     # get the com_port from the command line or default if none given
@@ -63,15 +54,12 @@ def s2a_fm():
         com_port = str(sys.argv[1])
     else:
         com_port = '/dev/ttyACM0'
-    logging.info('com port = %s' % com_port)
 
     try:
         # instantiate PyMata
         firmata = PyMata(com_port)  # pragma: no cover
     except Exception:
         print 'Could not instantiate PyMata - is your Arduino plugged in?'
-        logging.exception('Could not instantiate PyMata - is your Arduino plugged in?')
-        logging.debug("Exiting s2a_fm")
         return
 
     # determine the total number of pins and the number of analog pins for the Arduino
@@ -90,9 +78,6 @@ def s2a_fm():
             # non analog pins will be marked as IGNORE
             if pin != firmata.IGNORE:
                 number_of_analog_pins_discovered += 1
-
-    # log the number of pins found
-    logging.info('%d Total Pins and %d Analog Pins Found' % (total_pins_discovered, number_of_analog_pins_discovered))
 
     # instantiate the command handler
     scratch_command_handler = ScratchCommandHandlers(firmata, com_port, total_pins_discovered,
@@ -131,13 +116,11 @@ def s2a_fm():
         scratch_http_server.start_server(firmata, scratch_command_handler)
 
     except Exception:
-        logging.debug('Exception in s2a_fm.py %s' % str(Exception))
         firmata.close()
         return
 
     except KeyboardInterrupt:
         # give control back to the shell that started us
-        logging.info('s2a_fm.py: keyboard interrupt exception')
         firmata.close()
         return
 
